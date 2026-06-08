@@ -82,40 +82,59 @@ export default function FundPage() {
         </div>
       </section>
 
-      {/* Chart 3 — Indexed to 100 */}
+      {/* Chart 3 — Indexed to 100 + Holdings */}
       <section className="border-b border-border bg-surface">
         <div className="wrap section-py">
           <ScrollReveal>
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
-              <div>
-                <p className="label-gold mb-2">Fund vs Bitcoin — Indexed to 100</p>
-                <p className="font-sans font-semibold text-2xl text-ink tracking-tight">Same starting capital. Very different outcomes.</p>
-                <p className="text-sm font-sans text-ink-secondary mt-2 max-w-xl">
-                  Both lines start at 100 at inception (Nov 2025). The fund&apos;s cash buffer and disciplined deployment have materially reduced drawdown versus holding Bitcoin outright.
-                </p>
-              </div>
-              <div className="flex gap-6 shrink-0">
-                <div className="text-right">
-                  <p className="label-caps mb-1">Fund (Jun)</p>
-                  <p className="font-sans font-semibold text-lg text-red-500">92.26</p>
-                </div>
-                <div className="text-right">
-                  <p className="label-caps mb-1">BTC (Jun)</p>
-                  <p className="font-sans font-semibold text-lg text-ink-muted">57.49</p>
-                </div>
-                <div className="text-right border-l border-border pl-6">
-                  <p className="label-caps mb-1">Alpha</p>
-                  <p className="font-sans font-semibold text-lg text-gold">+34.8 pts</p>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-          <ScrollReveal delay={0.06}>
-            <IndexedChart height={320} />
-            <p className="text-xs font-sans text-ink-muted mt-3 italic">
-              * Jun data point reflects performance to 8 Jun 2026. BTC prices sourced from month-end closes.
+            <p className="label-gold mb-2">Fund vs Bitcoin — Indexed to 100</p>
+            <p className="font-sans font-semibold text-2xl text-ink mb-1 tracking-tight">Same starting capital. Very different outcomes.</p>
+            <p className="text-sm font-sans text-ink-secondary mb-6 max-w-xl">
+              Both lines start at 100 at inception (Nov 2025). The cash buffer and disciplined deployment have materially reduced drawdown vs holding Bitcoin outright.
             </p>
           </ScrollReveal>
+
+          <div className="grid md:grid-cols-3 gap-px bg-border mb-4">
+            {[
+              { label: 'Fund (Jun 2026)', value: '92.26', color: 'text-red-500' },
+              { label: 'BTC (Jun 2026)',  value: '57.49', color: 'text-ink-muted' },
+              { label: 'Fund Alpha',      value: '+34.8 pts', color: 'text-gold' },
+            ].map(s => (
+              <div key={s.label} className="bg-surface p-5">
+                <p className="label-caps mb-2">{s.label}</p>
+                <p className={`font-sans font-semibold text-2xl ${s.color}`}>{s.value}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-5 gap-8 items-start">
+            {/* Chart — narrower horizontal footprint to make gap more visual */}
+            <ScrollReveal className="md:col-span-3">
+              <IndexedChart height={300} />
+              <p className="text-xs font-sans text-ink-muted mt-2 italic">
+                * Jun reflects performance to 8 Jun 2026. BTC sourced from month-end closes.
+              </p>
+            </ScrollReveal>
+
+            {/* Holdings + Allocation */}
+            <ScrollReveal delay={0.06} className="md:col-span-2">
+              <p className="label-gold mb-3">Portfolio Allocation</p>
+              <AllocationChart />
+              <div className="mt-6 space-y-1 border-t border-border pt-4">
+                <p className="label-caps mb-3">Holdings</p>
+                {holdings.map(h => (
+                  <div key={h.asset} className={`flex items-center justify-between py-1.5 border-b border-border/40 text-xs font-sans ${h.asset === 'BTC' ? 'border-l-2 border-l-gold pl-2' : ''}`}>
+                    <div>
+                      <span className="font-medium text-ink">{h.asset}</span>
+                      <span className="text-ink-muted ml-2">{h.category}</span>
+                    </div>
+                    <span className={`font-medium tabular-nums ${h.retPos === false ? 'text-red-500' : h.retPos === true ? 'text-green-600' : 'text-ink-muted'}`}>
+                      {h.ret === 0 ? '—' : `${h.ret}%`}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 
@@ -201,18 +220,39 @@ export default function FundPage() {
 
               {/* Thesis */}
               <div className="border border-border bg-surface p-7">
-                <p className="label-caps mb-5">Trade Thesis</p>
-                <div className="space-y-4">
+                <p className="label-caps mb-5">Trade Thesis — 5 Converging Signals</p>
+                <div className="space-y-5">
                   {[
-                    { signal: 'Market Cycle', detail: 'Historical BTC pattern: Q2/Q3 seasonal drawdown after Q1 local peak. Post-halving year consolidation phase expected.' },
-                    { signal: 'MVRV-Z Score', detail: 'Elevated above fair value range — historically precedes corrections of 15–25% before cycle continuation.' },
-                    { signal: 'CME Futures', detail: 'Crowded long positioning with elevated open interest — squeeze risk asymmetrically favoured short side.' },
-                    { signal: 'BTC Dominance', detail: 'Diverging from price action — typical signal of late-cycle risk-off rotation before broader correction.' },
+                    {
+                      n: '01',
+                      signal: 'Market Cycle — Seasonal Summer Lull',
+                      detail: 'In post-halving years, BTC has historically topped in Q1 and entered a 2–3 month consolidation through Q2/Q3 before resuming the bull trend into Q4. 2021 saw a 55% drawdown from the May peak; 2017 a 40% retrace in the same window. With BTC having peaked near $109K in Nov 2025 and bouncing through Q1 2026, entering a short in late May aligned with the start of the historical lull window.',
+                    },
+                    {
+                      n: '02',
+                      signal: 'MVRV — Price Above Realised Value',
+                      detail: 'The MVRV ratio (Market Value ÷ Realised Value) measures whether the average coin holder is in profit. Markets typically find a durable bottom when MVRV dips below 1.0 — i.e. when the average holder is at or below break-even. At $77.5K, MVRV remained above 1.4, indicating the market had not yet reached the capitulation zone. The $60–65K range corresponded to approximate realised value, making it a credible target for the trade exit.',
+                    },
+                    {
+                      n: '03',
+                      signal: 'Funding Rates — Crowded Long Positioning',
+                      detail: 'Perpetual swap funding rates were persistently positive in the days prior to entry, indicating the market was overwhelmingly long on leverage. In such environments, any move lower forces long liquidations, creating a self-reinforcing cascade. Negative funding at the exit confirmed genuine fear and positioned us for a clean cover.',
+                    },
+                    {
+                      n: '04',
+                      signal: 'BTC Dominance Divergence',
+                      detail: 'BTC dominance was rising while BTC price was declining — a divergence that historically precedes broader market risk-off. When BTC dominance rises in a falling market, capital is rotating out of alts and into BTC defensively, but the broader trend is still down. This reinforced the short-side bias rather than suggesting a rotation play.',
+                    },
+                    {
+                      n: '05',
+                      signal: 'Macro Context — Liquidity Contraction',
+                      detail: 'Global M2 growth had flattened and the DXY was strengthening, reducing the liquidity tailwind that drove the Nov–Jan rally. Risk assets across equities and crypto had already begun decoupling from their Q1 highs. Our macro framework explicitly states: do not hold long risk exposure when liquidity is contracting. The summer lull short was therefore consistent with the broader fund thesis, not a contrarian bet.',
+                    },
                   ].map(s => (
-                    <div key={s.signal} className="flex gap-3">
-                      <div className="w-1.5 h-1.5 rounded-full bg-gold flex-shrink-0 mt-1.5" />
+                    <div key={s.n} className="flex gap-4 pb-4 border-b border-border last:border-0 last:pb-0">
+                      <span className="label-gold flex-shrink-0 mt-0.5 w-5">{s.n}</span>
                       <div>
-                        <p className="text-xs font-sans font-semibold text-ink mb-0.5">{s.signal}</p>
+                        <p className="text-xs font-sans font-semibold text-ink mb-1.5 tracking-tight">{s.signal}</p>
                         <p className="text-xs font-sans text-ink-muted leading-relaxed">{s.detail}</p>
                       </div>
                     </div>
@@ -246,50 +286,6 @@ export default function FundPage() {
                 </div>
               </ScrollReveal>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Holdings */}
-      <section className="border-b border-border bg-surface-subtle">
-        <div className="wrap section-py">
-          <ScrollReveal>
-            <p className="label-gold mb-2">Current Portfolio</p>
-            <p className="font-sans font-semibold text-2xl text-ink mb-8 tracking-tight">Holdings as of January 2026</p>
-          </ScrollReveal>
-          <div className="grid md:grid-cols-3 gap-10 items-start">
-            <div className="md:col-span-2 overflow-x-auto">
-              <table className="w-full font-sans text-sm">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left label-caps pb-3 pr-4">Asset</th>
-                    <th className="text-left label-caps pb-3 pr-4">Category</th>
-                    <th className="text-right label-caps pb-3 pr-4">Invested</th>
-                    <th className="text-right label-caps pb-3 pr-4">Avg Buy</th>
-                    <th className="text-right label-caps pb-3 pr-4">NAV</th>
-                    <th className="text-right label-caps pb-3">Return</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {holdings.map(h => (
-                    <tr key={h.asset} className={`border-b border-border/50 hover:bg-surface-subtle/50 transition-colors ${h.asset === 'BTC' ? 'border-l-2 border-l-gold' : ''}`}>
-                      <td className="py-3 pr-4 font-medium text-ink text-sm">{h.asset}</td>
-                      <td className="py-3 pr-4 text-xs text-ink-muted">{h.category}</td>
-                      <td className="py-3 pr-4 text-right tabular-nums text-sm text-ink">${h.invested.toLocaleString()}</td>
-                      <td className="py-3 pr-4 text-right tabular-nums text-xs text-ink-muted">{h.avgBuy}</td>
-                      <td className="py-3 pr-4 text-right tabular-nums text-sm text-ink">${h.nav.toLocaleString()}</td>
-                      <td className={`py-3 text-right tabular-nums text-sm font-medium ${h.retPos === false ? 'text-red-500' : h.retPos === true ? 'text-green-600' : 'text-ink-muted'}`}>
-                        {h.ret === 0 ? '0%' : `${h.ret}%`}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <p className="label-caps mb-4">Allocation</p>
-              <AllocationChart />
-            </div>
           </div>
         </div>
       </section>

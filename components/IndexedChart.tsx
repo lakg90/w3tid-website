@@ -48,7 +48,7 @@ export default function IndexedChart({ height = 300 }: { height?: number }) {
         <XAxis dataKey="period" tick={{ fill: '#8A847C', fontSize: 10 }} axisLine={false} tickLine={false} />
         <YAxis
           tick={{ fill: '#8A847C', fontSize: 10 }} axisLine={false} tickLine={false}
-          domain={[50, 115]} tickFormatter={v => `${v}`} width={35}
+          domain={[54, 108]} tickFormatter={v => `${v}`} width={35}
         />
         <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#E8E4DC', strokeWidth: 1, strokeDasharray: '4 4' }} />
         <Legend wrapperStyle={{ fontSize: 11, paddingTop: 14, color: '#4A4540' }} formatter={v => v === 'fund' ? 'W3TID Fund' : 'Bitcoin'} />

@@ -198,6 +198,16 @@ export const sessions = [
 // ── Events ────────────────────────────────────────────────────────────────────
 export const upcomingEvents = [
   {
+    name: 'Benjamin Cowen',
+    org: 'Into The Cryptoverse',
+    role: 'Founder & Lead Analyst',
+    bio: "Benjamin Cowen is one of the most respected independent macro analysts in crypto — known for his data-driven, cycle-based approach to Bitcoin. His work on the MVRV-Z Score, log regression bands, and market cycle timing directly informs W3TID's investment framework. We sat down with Benjamin to discuss cycle positioning, the summer lull thesis, and what the data says about the road ahead.",
+    date: 'Recent Meeting',
+    logo: '/logos/ITC.jpg',
+    photo: '/events/ben-cowen.png',
+    featured: true,
+  },
+  {
     name: 'Martin Bentzen',
     org: 'Klein Group',
     role: 'Web3 Venture Capital',

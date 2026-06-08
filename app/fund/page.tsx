@@ -1,4 +1,5 @@
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
 import { ScrollReveal } from '@/components/AnimatedSection';
 import PortfolioChart from '@/components/PortfolioChart';
 import IndexedChart from '@/components/IndexedChart';
@@ -58,7 +59,7 @@ export default function FundPage() {
               { label: 'Total Portfolio', value: '$13,000', sub: 'AUM' },
               { label: 'Total Return',    value: '−7.74%',  sub: 'incl. 50% cash', neg: true },
               { label: 'Invested Return', value: '−15.54%', sub: 'deployed capital', neg: true },
-              { label: 'Benchmark BGCI', value: '−13.10%', sub: 'same period',      neg: true },
+              { label: 'Benchmark BGCI', value: '−43.00%', sub: 'since inception',   neg: true },
             ].map(s => (
               <div key={s.label} className="bg-surface p-6">
                 <p className="label-caps mb-2">{s.label}</p>
@@ -108,6 +109,8 @@ export default function FundPage() {
       <section className="border-b border-border bg-surface">
         <div className="wrap py-10">
           <ScrollReveal>
+            <p className="label-gold mb-1">Current Allocation</p>
+            <p className="font-sans font-semibold text-lg text-ink mb-6 tracking-tight">Portfolio composition — cash-heavy, awaiting deployment levels</p>
             <div className="flex flex-col md:flex-row md:items-center gap-8">
               {/* Donut */}
               <div className="w-48 flex-shrink-0">
@@ -166,6 +169,14 @@ export default function FundPage() {
               </div>
             ))}
           </div>
+
+          {/* TradingView chart */}
+          <ScrollReveal className="mb-6">
+            <div className="border border-border bg-surface overflow-hidden">
+              <p className="label-caps px-5 pt-4 pb-3 border-b border-border">BTC / USD — TradingView · Daily Chart · Short Entry &amp; Exit Zones</p>
+              <Image src="/charts/btc-short.png" alt="BTC short trade TradingView chart" width={1600} height={700} className="w-full h-auto" />
+            </div>
+          </ScrollReveal>
 
           <ScrollReveal delay={0.06}>
             <div className="grid md:grid-cols-2 gap-6">

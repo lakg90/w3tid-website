@@ -4,6 +4,9 @@ import { ScrollReveal } from '@/components/AnimatedSection';
 import { upcomingEvents, pastEvents } from '@/lib/data';
 
 export default function EventsPage() {
+  const featuredEvent = upcomingEvents.find(ev => ev.featured);
+  const regularEvents = upcomingEvents.filter(ev => !ev.featured);
+
   return (
     <main className="pt-14">
 
@@ -27,12 +30,52 @@ export default function EventsPage() {
             <p className="label-gold mb-2">Upcoming — 2025/26</p>
             <h2 className="font-sans font-semibold text-3xl text-ink mb-12 tracking-tight">Confirmed speakers.</h2>
           </ScrollReveal>
+
+          {/* Featured speaker — Benjamin Cowen */}
+          {featuredEvent && (
+            <ScrollReveal>
+              <div className="border border-border bg-surface mb-px overflow-hidden">
+                <div className="grid md:grid-cols-[320px_1fr]">
+                  <div className="relative overflow-hidden bg-surface-subtle min-h-[280px]">
+                    <Image
+                      src={featuredEvent.photo!}
+                      alt={featuredEvent.name}
+                      fill
+                      className="object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-surface/30" />
+                  </div>
+                  <div className="p-8 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center gap-3 mb-5">
+                        <span className="text-[10px] font-sans uppercase tracking-widest px-2.5 py-1 bg-gold text-white">
+                          Featured
+                        </span>
+                        <span className="text-[10px] font-sans uppercase tracking-widest px-2 py-1 border border-border text-ink-muted">
+                          {featuredEvent.date}
+                        </span>
+                      </div>
+                      {featuredEvent.logo && (
+                        <div className="w-14 h-14 border border-border flex items-center justify-center overflow-hidden mb-5 bg-white">
+                          <Image src={featuredEvent.logo} alt={featuredEvent.org} width={56} height={56} className="object-contain w-full h-full" />
+                        </div>
+                      )}
+                      <p className="font-sans font-semibold text-2xl text-ink mb-1 tracking-tight">{featuredEvent.name}</p>
+                      <p className="text-sm font-sans text-gold font-medium mb-1">{featuredEvent.role}</p>
+                      <p className="text-xs font-sans text-ink-muted mb-5">{featuredEvent.org}</p>
+                      <p className="text-sm font-sans text-ink-secondary leading-relaxed max-w-2xl">{featuredEvent.bio}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          )}
+
           <div className="grid md:grid-cols-2 gap-px bg-border">
-            {upcomingEvents.map((ev, i) => (
+            {regularEvents.map((ev, i) => (
               <ScrollReveal key={ev.name} delay={(i % 2) * 0.06}>
                 <div className="bg-surface p-7 h-full hover:bg-surface-subtle transition-colors duration-200">
                   <div className="flex items-start gap-4 mb-4">
-                    {/* Logo or initials */}
                     <div className="w-12 h-12 border border-border flex items-center justify-center flex-shrink-0 overflow-hidden bg-surface">
                       {ev.logo ? (
                         <Image src={ev.logo} alt={ev.org} width={48} height={48} className="object-contain w-full h-full" />

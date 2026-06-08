@@ -57,19 +57,21 @@ export default function TeamPage() {
               <ScrollReveal key={d.division} delay={i * 0.07}>
                 <div className="bg-surface p-7 h-full border-t-2 border-t-gold">
                   <p className="label-gold mb-1">{d.division}</p>
-                  <p className="text-xs font-sans text-ink-muted mb-4">Lead: {d.lead}</p>
                   <p className="text-sm font-sans text-ink-secondary leading-relaxed mb-5">{d.description}</p>
                   <div className="space-y-1.5">
                     {d.members.map(m => (
-                      <div key={m} className="flex items-center gap-2 text-xs font-sans text-ink-muted">
-                        <span className="w-1 h-1 rounded-full bg-gold" />{m}
-                      </div>
+                      <div key={m} className="text-xs font-sans text-ink-muted">{m}</div>
                     ))}
                   </div>
                 </div>
               </ScrollReveal>
             ))}
           </div>
+          <ScrollReveal>
+            <p className="mt-8 text-sm font-sans text-ink-secondary border-l-2 border-l-gold pl-4">
+              Anyone is welcome to join and help contribute to any division.
+            </p>
+          </ScrollReveal>
         </div>
       </section>
 

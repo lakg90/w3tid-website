@@ -25,6 +25,35 @@ export const portfolioData = [
   { date: "8 Jun",      invested: -15.54, total: -7.74 },
 ];
 
+// ── Indexed-to-100: Fund vs BTC ───────────────────────────────────────────────
+// BTC prices at month-end from Nov 2025 inception ($109,574) → Jun 2026 (~$63,000)
+export const indexedData = [
+  { period: 'Nov',  fund: 100.00, btc: 100.00 },
+  { period: 'Dec',  fund: 98.65,  btc: 79.87  },
+  { period: 'Jan',  fund: 95.39,  btc: 71.84  },
+  { period: 'Feb',  fund: 96.00,  btc: 61.15  },
+  { period: 'Mar',  fund: 95.80,  btc: 62.27  },
+  { period: 'Apr',  fund: 98.95,  btc: 69.62  },
+  { period: 'May',  fund: 101.53, btc: 67.17  },
+  { period: 'Jun*', fund: 92.26,  btc: 57.49  },
+];
+
+// ── Swing trade ───────────────────────────────────────────────────────────────
+export const swingTrade = {
+  asset: 'BTC',
+  direction: 'SHORT',
+  leverage: '3×',
+  capital: 500,
+  entry: 77500,
+  exit: 63000,
+  entryDate: '25 May 2026',
+  exitDate: 'Jun 2026 (capitulation)',
+  priceMove: -18.71,
+  leveragedReturn: 56.1,
+  pnl: 280,
+  thesis: 'Summer lull hypothesis — historical BTC pattern of Q2/Q3 seasonal drawdown after Q1 peak. MVRV-Z Score elevated, BTC Dominance diverging from price action, and CME futures showing crowded long positioning. Thesis: price would retrace to the $60–65K range before the anticipated Q4 uptrend resumes.',
+};
+
 // ── Holdings ──────────────────────────────────────────────────────────────────
 export const holdings = [
   { asset: 'BTC',        category: 'Blue Chip',  invested: 4790, avgBuy: '$74,739', nav: 4029, ret: -15.9, retPos: false },
@@ -102,7 +131,7 @@ export const sessions = [
   {
     number: 1,
     title: 'Introduction to Blockchain & Traditional Finance',
-    date: 'October 2025',
+    date: 'Session 1',
     topics: ['History of money', 'Ledgers and the traditional financial system', 'Introduction to Bitcoin', 'What problem does blockchain solve?'],
     context: 'We start every cohort by asking: what is money? Understanding the failures of the traditional financial system is the prerequisite to understanding why blockchain matters.',
     pdf: '/course/session-1.pdf',
@@ -110,7 +139,7 @@ export const sessions = [
   {
     number: 2,
     title: 'Cryptography & Technical Fundamentals',
-    date: 'October 2025',
+    date: 'Session 2',
     topics: ['Hash functions (SHA-256)', 'Asymmetric cryptography', 'Digital signatures', 'Consensus mechanisms (PoW vs PoS)', 'UTXO model and how transactions work'],
     context: 'The technical backbone. Most people talk about Bitcoin without understanding the cryptographic guarantees that make it trustless.',
     pdf: '/course/session-2.pdf',
@@ -118,7 +147,7 @@ export const sessions = [
   {
     number: 3,
     title: 'Technical Challenges, Policy & Use Cases',
-    date: 'November 2025',
+    date: 'Session 3',
     topics: ['The Scalability Trilemma', "Ethereum's transition to Proof of Stake", 'Privacy, interoperability and governance', 'Commodity vs Security classification', 'Smart contracts, DeFi, NFTs'],
     context: 'Blockchain is not a solution looking for a problem. We map specific use cases to specific technical capabilities — and are honest about where the technology currently falls short.',
     pdf: '/course/session-3.pdf',
@@ -126,7 +155,7 @@ export const sessions = [
   {
     number: 4,
     title: 'Cryptocurrencies, Tokenomics & Fundamental Analysis',
-    date: 'November 2025',
+    date: 'Session 4',
     topics: ['Tokenomics frameworks — supply schedules, inflation vs deflation models, staking, burning, vesting', 'Connecting tokenomics to investment potential', 'Oracle networks, L1s, functional coins', 'Fundamental analysis methodology'],
     context: 'Not all tokens are equal. Understanding the economic design of a protocol is the single most important skill for separating genuine value from speculation.',
     pdf: '/course/session-4.pdf',
@@ -135,7 +164,7 @@ export const sessions = [
   {
     number: 5,
     title: 'Market History & Market Cycle Theory',
-    date: 'January 2026',
+    date: 'Session 5',
     topics: ['Full crypto market history', 'The 4-year Bitcoin halving cycle', 'Cycle stages', 'Market cycle indicators: MVRV-Z Score, BTC Dominance, Puell Multiple, Log Regression Band, Pi Indicator'],
     context: "History doesn't repeat, but it rhymes. Understanding where we are in the cycle is the foundation of our fund's allocation strategy.",
     pdf: '/course/session-5.pdf',
@@ -143,7 +172,7 @@ export const sessions = [
   {
     number: 6,
     title: 'Modern Portfolio Theory & Portfolio Construction',
-    date: 'January 2026',
+    date: 'Session 6',
     topics: ['MPT overview', 'Efficient frontier', 'Sharpe ratio, Sortino ratio', 'Correlation matrices in crypto', 'Building a crypto portfolio using MPT principles', 'Dynamic Sharpe-maximising optimiser'],
     context: 'The same mathematical framework used by institutional asset managers, applied to digital assets. This session is where theory meets our live fund.',
     pdf: '/course/session-6.pdf',
@@ -151,7 +180,7 @@ export const sessions = [
   {
     number: 7,
     title: 'Macro-Economic Analysis',
-    date: 'February 2026',
+    date: 'Session 7',
     topics: ['Key macro indicators (CPI, unemployment, Fed funds rate)', 'Global liquidity as the primary fuel for risk assets', 'M2 money supply', 'DXY', 'Yield curve', 'CME FedWatch', 'Geopolitics and second-order effects'],
     context: 'Bitcoin does not exist in a vacuum. Every fund report we publish begins with macro. This session is why.',
     pdf: '/course/session-7.pdf',
@@ -159,7 +188,7 @@ export const sessions = [
   {
     number: 8,
     title: 'Technical Analysis, Trading Patterns & Execution',
-    date: 'March 2026',
+    date: 'Session 8',
     topics: ['Foundations of TA — support/resistance, moving averages, RSI, MACD, volume', 'Chart patterns', 'Open interest and funding rate interpretation', 'Trade setups and entry/exit execution', 'Trading psychology'],
     context: 'The final session brings everything together into a live market context. By the end, members can read a chart, size a position, and execute with a defined framework.',
     pdf: '/course/session-8.pdf',

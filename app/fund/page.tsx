@@ -1,11 +1,11 @@
-import { Download, FileText, ArrowDownRight, ArrowUpRight, BookOpen } from 'lucide-react';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { ScrollReveal } from '@/components/AnimatedSection';
 import PortfolioChart from '@/components/PortfolioChart';
 import IndexedChart from '@/components/IndexedChart';
 import AllocationChart from '@/components/AllocationChart';
 import EmailCapture from '@/components/EmailCapture';
 import BTCTicker from '@/components/BTCTicker';
-import { allocationData, fundReports, swingTrade, sessions } from '@/lib/data';
+import { allocationData, swingTrade } from '@/lib/data';
 
 const philosophy = [
   { number: '01', title: 'Macro-Regime Driven Allocation', body: 'We begin every allocation decision by determining the prevailing macro regime. In bear markets, we concentrate in BTC and Gold — the highest-quality, most liquid assets — and hold significant cash. We do not chase altcoin performance when macro conditions are unfavourable. When quantitative easing restarts and interest rates fall below the neutral rate, we rotate toward higher-beta altcoin exposure. The regime determines the portfolio, not the other way round.' },
@@ -278,73 +278,6 @@ export default function FundPage() {
                 </div>
               </ScrollReveal>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Resources — Reports + Course Notes */}
-      <section className="border-b border-border bg-surface">
-        <div className="wrap section-py">
-          <ScrollReveal>
-            <p className="label-gold mb-2">Resources</p>
-            <p className="font-sans font-semibold text-3xl text-ink mb-12 tracking-tight">Fund reports &amp; course notes.</p>
-          </ScrollReveal>
-
-          <div className="grid md:grid-cols-2 gap-10">
-            {/* Fund Reports */}
-            <ScrollReveal>
-              <div className="flex items-center gap-2 mb-6">
-                <FileText size={15} className="text-gold" />
-                <p className="font-sans font-semibold text-base text-ink tracking-tight">Fund Reports</p>
-              </div>
-              <div className="space-y-px bg-border border border-border">
-                {fundReports.map(r => (
-                  <div key={r.id} className="bg-surface px-5 py-4 flex items-center justify-between gap-4">
-                    <div>
-                      <p className="font-sans font-medium text-sm text-ink">{r.title}</p>
-                      <p className="label-caps text-ink-muted">{r.date} · {r.headline.split('.')[0]}</p>
-                    </div>
-                    <a
-                      href={r.pdf}
-                      download
-                      className="flex items-center gap-1.5 text-xs font-sans text-gold font-medium hover:text-gold-dark transition-colors whitespace-nowrap flex-shrink-0"
-                    >
-                      <Download size={12} /> PDF
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
-
-            {/* Course Notes */}
-            <ScrollReveal delay={0.08}>
-              <div className="flex items-center gap-2 mb-6">
-                <BookOpen size={15} className="text-gold" />
-                <p className="font-sans font-semibold text-base text-ink tracking-tight">Course Notes</p>
-              </div>
-              <div className="space-y-px bg-border border border-border">
-                {sessions.map(s => (
-                  <div key={s.number} className="bg-surface px-5 py-4 flex items-center justify-between gap-4">
-                    <div>
-                      <p className="font-sans font-medium text-sm text-ink">{s.title}</p>
-                      <div className="flex items-center gap-2">
-                        <p className="label-caps text-ink-muted">{s.date}</p>
-                        {s.note && (
-                          <span className="text-[9px] font-sans uppercase tracking-widest border border-border px-1.5 py-0.5 text-ink-muted">{s.note}</span>
-                        )}
-                      </div>
-                    </div>
-                    <a
-                      href={s.pdf}
-                      download
-                      className="flex items-center gap-1.5 text-xs font-sans text-gold font-medium hover:text-gold-dark transition-colors whitespace-nowrap flex-shrink-0"
-                    >
-                      <Download size={12} /> PDF
-                    </a>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
           </div>
         </div>
       </section>

@@ -13,6 +13,7 @@ const links = [
   { label: 'Think Tank', href: '/thinktank' },
   { label: 'Events',     href: '/events' },
   { label: 'Team',       href: '/team' },
+  { label: 'Resources',  href: '/resources' },
 ];
 
 export default function Navbar() {

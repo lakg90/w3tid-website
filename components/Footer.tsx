@@ -15,10 +15,10 @@ export default function Footer() {
         <div>
           <p className="label-caps text-white/30 mb-4">Navigate</p>
           <ul className="space-y-2.5 text-xs">
-            {['/', '/fund', '/education', '/thinktank', '/events', '/team'].map((href, i) => (
+            {['/', '/fund', '/education', '/thinktank', '/events', '/team', '/resources'].map((href, i) => (
               <li key={href}>
                 <Link href={href} className="hover:text-white transition-colors">
-                  {['Home', 'Fund', 'Education', 'Think Tank', 'Events', 'Team'][i]}
+                  {['Home', 'Fund', 'Education', 'Think Tank', 'Events', 'Team', 'Resources'][i]}
                 </Link>
               </li>
             ))}

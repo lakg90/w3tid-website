@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Download } from 'lucide-react';
 import { sessions } from '@/lib/data';
 
 export default function Timeline() {
@@ -10,10 +10,10 @@ export default function Timeline() {
 
   return (
     <div className="relative">
-      {/* Vertical line */}
-      <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold/40 to-transparent -translate-x-1/2" />
+      {/* Center line — desktop only */}
+      <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-px bg-border -translate-x-1/2 z-0" />
 
-      <div className="flex flex-col gap-0">
+      <div className="flex flex-col gap-6">
         {sessions.map((s, i) => {
           const isLeft = i % 2 === 0;
           const isOpen = expanded === s.number;
@@ -21,33 +21,32 @@ export default function Timeline() {
           return (
             <motion.div
               key={s.number}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.45, delay: 0.05 }}
-              className={`relative md:grid md:grid-cols-2 gap-8 mb-8 ${isLeft ? '' : ''}`}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.4, delay: 0.04 }}
+              className="relative md:grid md:grid-cols-[1fr_48px_1fr] items-start gap-0"
             >
-              {/* Desktop: left or right placement */}
-              <div className={`hidden md:block ${isLeft ? 'order-1' : 'order-2'}`}>
-                {(isLeft) && (
-                  <SessionCard s={s} isOpen={isOpen} onToggle={() => setExpanded(isOpen ? null : s.number)} align="right" />
-                )}
+              {/* Left slot */}
+              <div className={`hidden md:block ${isLeft ? 'pr-8' : ''}`}>
+                {isLeft && <SessionCard s={s} isOpen={isOpen} onToggle={() => setExpanded(isOpen ? null : s.number)} />}
               </div>
 
-              {/* Center dot */}
-              <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-6 w-8 h-8 rounded-full bg-gold border-4 border-background items-center justify-center z-10 shadow-sm">
-                <span className="text-white font-display font-bold text-[10px]">{s.number}</span>
+              {/* Center node */}
+              <div className="hidden md:flex flex-col items-center z-10 pt-5">
+                <div className="w-8 h-8 rounded-full bg-gold border-2 border-background flex items-center justify-center shadow-sm">
+                  <span className="text-white font-sans font-semibold text-[10px]">{String(s.number).padStart(2,'0')}</span>
+                </div>
               </div>
 
-              <div className={`hidden md:block ${isLeft ? 'order-2' : 'order-1'}`}>
-                {(!isLeft) && (
-                  <SessionCard s={s} isOpen={isOpen} onToggle={() => setExpanded(isOpen ? null : s.number)} align="left" />
-                )}
+              {/* Right slot */}
+              <div className={`hidden md:block ${!isLeft ? 'pl-8' : ''}`}>
+                {!isLeft && <SessionCard s={s} isOpen={isOpen} onToggle={() => setExpanded(isOpen ? null : s.number)} />}
               </div>
 
-              {/* Mobile: always stacked */}
+              {/* Mobile */}
               <div className="md:hidden">
-                <SessionCard s={s} isOpen={isOpen} onToggle={() => setExpanded(isOpen ? null : s.number)} align="left" mobile />
+                <SessionCard s={s} isOpen={isOpen} onToggle={() => setExpanded(isOpen ? null : s.number)} mobile />
               </div>
             </motion.div>
           );
@@ -58,41 +57,28 @@ export default function Timeline() {
 }
 
 function SessionCard({
-  s,
-  isOpen,
-  onToggle,
-  align,
-  mobile = false,
+  s, isOpen, onToggle, mobile = false,
 }: {
   s: (typeof sessions)[0];
   isOpen: boolean;
   onToggle: () => void;
-  align: 'left' | 'right';
   mobile?: boolean;
 }) {
   return (
-    <div
-      className={`bg-surface border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 ${
-        mobile ? '' : align === 'right' ? 'mr-6' : 'ml-6'
-      }`}
-    >
-      <button
-        onClick={onToggle}
-        className="w-full text-left p-6 flex items-start justify-between gap-4"
-      >
+    <div className="border border-border bg-surface hover:bg-surface-subtle transition-colors duration-200">
+      <button onClick={onToggle} className="w-full text-left p-5 flex items-start justify-between gap-4">
         <div className="flex items-start gap-3">
-          <span className="w-7 h-7 rounded-full bg-gold flex items-center justify-center flex-shrink-0 mt-0.5 text-white font-display font-bold text-xs md:hidden">
-            {s.number}
-          </span>
+          {mobile && (
+            <span className="w-6 h-6 rounded-full bg-gold flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span className="text-white font-sans font-semibold text-[9px]">{String(s.number).padStart(2,'0')}</span>
+            </span>
+          )}
           <div>
-            <p className="label-gold mb-1">Session {s.number} · {s.date}</p>
-            <h3 className="font-display font-bold text-lg text-ink">{s.title}</h3>
+            <p className="label-gold mb-1">{s.date}</p>
+            <p className="font-sans font-semibold text-sm text-ink tracking-tight">{s.title}</p>
           </div>
         </div>
-        <ChevronDown
-          size={18}
-          className={`text-ink-muted flex-shrink-0 mt-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-        />
+        <ChevronDown size={15} className={`text-ink-muted flex-shrink-0 mt-1 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       <AnimatePresence initial={false}>
@@ -101,23 +87,33 @@ function SessionCard({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.22 }}
             className="overflow-hidden"
           >
-            <div className="px-6 pb-6 border-t border-border pt-4">
-              <div className="mb-4">
-                <p className="label-caps mb-2.5">Key Topics</p>
-                <ul className="space-y-1.5">
-                  {s.topics.map((t) => (
-                    <li key={t} className="flex items-start gap-2 text-sm font-sans text-ink-secondary">
-                      <span className="w-1 h-1 rounded-full bg-gold flex-shrink-0 mt-2" />
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="bg-surface-subtle rounded-lg p-4 border-l-2 border-l-gold">
-                <p className="text-sm font-sans text-ink-secondary leading-relaxed italic">&ldquo;{s.context}&rdquo;</p>
+            <div className="px-5 pb-5 border-t border-border pt-4">
+              <p className="label-caps mb-2.5">Key Topics</p>
+              <ul className="space-y-1.5 mb-4">
+                {s.topics.map(t => (
+                  <li key={t} className="flex items-start gap-2 text-xs font-sans text-ink-secondary">
+                    <span className="w-1 h-1 rounded-full bg-gold flex-shrink-0 mt-1.5" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs font-sans text-ink-muted leading-relaxed mb-4 border-l-2 border-l-gold pl-3">
+                {s.context}
+              </p>
+              <div className="flex items-center gap-3">
+                <a
+                  href={s.pdf}
+                  download
+                  className="inline-flex items-center gap-1.5 text-xs font-sans text-gold font-medium hover:text-gold-dark transition-colors uppercase tracking-widest"
+                >
+                  <Download size={11} /> Download Notes
+                </a>
+                {s.note && (
+                  <span className="text-[10px] font-sans text-ink-muted uppercase tracking-widest border border-border px-2 py-0.5">{s.note}</span>
+                )}
               </div>
             </div>
           </motion.div>

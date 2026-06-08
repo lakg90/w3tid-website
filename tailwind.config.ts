@@ -23,12 +23,10 @@ const config: Config = {
         btc: '#F7931A',
       },
       fontFamily: {
-        display: ['var(--font-playfair)', 'Georgia', 'serif'],
-        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
-      maxWidth: {
-        content: '1200px',
-      },
+      maxWidth: { content: '1200px' },
     },
   },
   plugins: [],

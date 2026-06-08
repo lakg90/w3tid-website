@@ -5,33 +5,30 @@ import Timeline from '@/components/Timeline';
 
 export default function EducationPage() {
   return (
-    <main className="pt-16">
-
-      {/* Hero */}
-      <div className="border-b border-border bg-surface-subtle grain-overlay">
-        <div className="wrap relative z-10 py-20">
+    <main className="pt-14">
+      <div className="border-b border-border bg-surface-subtle">
+        <div className="wrap py-20">
           <p className="label-gold mb-4">Blockchain Education</p>
-          <h1 className="font-display font-bold text-5xl md:text-6xl text-ink mb-5 max-w-3xl leading-tight">
+          <h1 className="font-sans font-semibold text-4xl md:text-5xl text-ink mb-4 tracking-tight max-w-3xl leading-tight">
             Eight sessions. From the history of money to live trading execution.
           </h1>
-          <p className="text-ink-secondary font-sans text-lg max-w-2xl leading-relaxed">
-            Our blockchain course was written entirely in-house by W3TID members and has been delivered to every cohort since founding. It covers technical fundamentals, DeFi, tokenomics, macro-economic analysis, and trading — everything a serious Web3 practitioner needs.
+          <p className="text-ink-secondary font-sans text-base max-w-xl leading-relaxed">
+            Our blockchain course was written entirely in-house by W3TID members and delivered to every cohort since founding. It covers technical fundamentals, DeFi, tokenomics, macro-economic analysis, and trading.
           </p>
         </div>
       </div>
 
-      {/* Overview stats */}
       <section className="border-b border-border bg-surface">
-        <div className="wrap py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-lg overflow-hidden">
+        <div className="wrap">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
             {[
               { label: 'Sessions', value: '8' },
               { label: 'Topics Covered', value: '40+' },
               { label: 'Cohorts Delivered', value: '2' },
               { label: 'Written In-House', value: '100%' },
-            ].map((s) => (
+            ].map(s => (
               <div key={s.label} className="bg-surface p-6 text-center">
-                <p className="font-display font-bold text-3xl text-gold mb-1">{s.value}</p>
+                <p className="font-sans font-semibold text-3xl text-gold mb-1">{s.value}</p>
                 <p className="label-caps">{s.label}</p>
               </div>
             ))}
@@ -39,29 +36,23 @@ export default function EducationPage() {
         </div>
       </section>
 
-      {/* Timeline */}
       <section className="border-b border-border bg-surface-subtle section-py">
         <div className="wrap">
           <ScrollReveal>
             <p className="label-gold mb-2">The Curriculum</p>
-            <h2 className="font-display font-bold text-4xl text-ink mb-14">
-              Eight sessions, built from first principles.
-            </h2>
+            <h2 className="font-sans font-semibold text-3xl text-ink mb-12 tracking-tight">Eight sessions, built from first principles.</h2>
           </ScrollReveal>
           <Timeline />
         </div>
       </section>
 
-      {/* What you'll learn */}
       <section className="border-b border-border bg-surface section-py">
         <div className="wrap">
           <ScrollReveal>
             <p className="label-gold mb-2">Outcomes</p>
-            <h2 className="font-display font-bold text-4xl text-ink mb-10">
-              By the end of the course, you will be able to:
-            </h2>
+            <h2 className="font-sans font-semibold text-2xl text-ink mb-8 tracking-tight">By the end of the course, you will be able to:</h2>
           </ScrollReveal>
-          <div className="grid md:grid-cols-2 gap-4 max-w-3xl">
+          <div className="grid md:grid-cols-2 gap-3 max-w-3xl">
             {[
               'Explain how Bitcoin works at the cryptographic level',
               'Evaluate any token using a rigorous tokenomics framework',
@@ -72,11 +63,9 @@ export default function EducationPage() {
               'Identify where blockchain genuinely creates value versus hype',
               'Contribute meaningfully to fund discussions and deployment decisions',
             ].map((item, i) => (
-              <ScrollReveal key={i} delay={i * 0.04}>
-                <div className="flex items-start gap-3 p-4 rounded-lg border border-border bg-surface-subtle">
-                  <span className="w-5 h-5 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="w-2 h-2 rounded-full bg-gold" />
-                  </span>
+              <ScrollReveal key={i} delay={i * 0.03}>
+                <div className="flex items-start gap-3 p-4 border border-border bg-surface-subtle">
+                  <span className="w-1 h-1 rounded-full bg-gold flex-shrink-0 mt-2" />
                   <p className="text-sm font-sans text-ink-secondary leading-relaxed">{item}</p>
                 </div>
               </ScrollReveal>
@@ -85,23 +74,21 @@ export default function EducationPage() {
         </div>
       </section>
 
-      {/* Course notes CTA */}
       <section className="bg-surface-subtle section-py">
-        <div className="wrap text-center">
+        <div className="wrap">
           <ScrollReveal>
-            <h2 className="font-display font-bold text-3xl text-ink mb-4">
-              Course notes available to all active members.
-            </h2>
-            <p className="text-ink-secondary font-sans text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-              Course notes are provided to all active W3TID members in LaTeX-formatted PDF. Authored by Leon Godtfredsen, Sahand Sarbaz, Josh Davidson, and Jose Garrido Boix.
-            </p>
-            <Link href="/#join" className="btn-gold inline-flex items-center gap-2">
-              Become a Member <ArrowRight size={16} />
-            </Link>
+            <div className="border-t-2 border-t-gold pt-8 max-w-xl">
+              <h2 className="font-sans font-semibold text-2xl text-ink mb-3 tracking-tight">Course notes available to all active members.</h2>
+              <p className="text-ink-secondary font-sans text-sm leading-relaxed mb-6">
+                Provided in LaTeX-formatted PDF. Authored by Leon Godtfredsen, Sahand Sarbaz, Josh Davidson, and Jose Garrido Boix.
+              </p>
+              <Link href="/#join" className="btn-gold inline-flex items-center gap-2">
+                Become a Member <ArrowRight size={14} />
+              </Link>
+            </div>
           </ScrollReveal>
         </div>
       </section>
-
     </main>
   );
 }

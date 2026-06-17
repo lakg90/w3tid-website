@@ -1,10 +1,28 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   Legend, ReferenceLine, ResponsiveContainer,
 } from 'recharts';
 import { portfolioData } from '@/lib/data';
+
+// Appends a live "Now" point (current returns from /api/portfolio) to the
+// reported history, so the leading edge tracks the market in real time.
+function useLivePortfolioData() {
+  const [data, setData] = useState(portfolioData);
+  useEffect(() => {
+    let active = true;
+    const load = () => fetch('/api/portfolio').then(r => (r.ok ? r.json() : null)).then(d => {
+      if (!active || d?.total_return_pct == null) return;
+      setData([...portfolioData, { date: 'Now', invested: +d.invested_return_pct.toFixed(2), total: +d.total_return_pct.toFixed(2) }]);
+    }).catch(() => {});
+    load();
+    const t = setInterval(load, 60_000);
+    return () => { active = false; clearInterval(t); };
+  }, []);
+  return data;
+}
 
 function CustomTooltip({ active, payload, label }: {
   active?: boolean;
@@ -47,16 +65,17 @@ function CustomTooltip({ active, payload, label }: {
 interface Props { height?: number; }
 
 export default function PortfolioChart({ height = 280 }: Props) {
+  const data = useLivePortfolioData();
   return (
     <ResponsiveContainer width="100%" height={height}>
-      <LineChart data={portfolioData} margin={{ top: 10, right: 16, left: -10, bottom: 0 }}>
+      <LineChart data={data} margin={{ top: 10, right: 16, left: -10, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#E8E4DC" vertical={false} />
         <XAxis
           dataKey="date"
           tick={{ fill: '#8A847C', fontSize: 10 }}
           axisLine={false}
           tickLine={false}
-          interval={3}
+          interval="preserveStartEnd"
         />
         <YAxis
           tick={{ fill: '#8A847C', fontSize: 10 }}

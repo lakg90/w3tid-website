@@ -1,10 +1,28 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid,
   Tooltip, Legend, ReferenceLine, ResponsiveContainer,
 } from 'recharts';
 import { indexedData } from '@/lib/data';
+
+// Appends a live "Now" point (fund & BTC indexed to 100 at inception) so the
+// comparison updates with the market.
+function useLiveIndexedData() {
+  const [data, setData] = useState(indexedData);
+  useEffect(() => {
+    let active = true;
+    const load = () => fetch('/api/portfolio').then(r => (r.ok ? r.json() : null)).then(d => {
+      if (!active || d?.fund_index == null || d?.btc_index == null) return;
+      setData([...indexedData, { period: 'Now', fund: +d.fund_index.toFixed(1), btc: +d.btc_index.toFixed(1) }]);
+    }).catch(() => {});
+    load();
+    const t = setInterval(load, 60_000);
+    return () => { active = false; clearInterval(t); };
+  }, []);
+  return data;
+}
 
 function CustomTooltip({ active, payload, label }: {
   active?: boolean;
@@ -40,9 +58,10 @@ function CustomTooltip({ active, payload, label }: {
 }
 
 export default function IndexedChart({ height = 300 }: { height?: number }) {
+  const data = useLiveIndexedData();
   return (
     <ResponsiveContainer width="100%" height={height}>
-      <AreaChart data={indexedData} margin={{ top: 10, right: 10, left: 20, bottom: 0 }}>
+      <AreaChart data={data} margin={{ top: 10, right: 10, left: 20, bottom: 0 }}>
         <defs>
           <linearGradient id="fundGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%"   stopColor="#D4A017" stopOpacity={0.18} />
@@ -57,7 +76,7 @@ export default function IndexedChart({ height = 300 }: { height?: number }) {
         <XAxis dataKey="period" tick={{ fill: '#8A847C', fontSize: 10 }} axisLine={false} tickLine={false} />
         <YAxis
           tick={{ fill: '#8A847C', fontSize: 10 }} axisLine={false} tickLine={false}
-          domain={[54, 108]} width={32}
+          domain={[40, 110]} width={32}
           tickFormatter={v => `${v}`}
         />
         <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#C8C0B0', strokeWidth: 1, strokeDasharray: '4 4' }} />

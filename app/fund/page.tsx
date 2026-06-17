@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { ScrollReveal } from '@/components/AnimatedSection';
 import PortfolioChart from '@/components/PortfolioChart';
 import IndexedChart from '@/components/IndexedChart';
-import AllocationChart from '@/components/AllocationChart';
 import EmailCapture from '@/components/EmailCapture';
 import BTCTicker from '@/components/BTCTicker';
-import { allocationData, swingTrade } from '@/lib/data';
+import { LiveStatBand, LiveHoldings, LiveAllocation, LiveReturnBars, LiveCostVsValue } from '@/components/LivePortfolio';
+import { swingTrade } from '@/lib/data';
 
 const philosophy = [
   { number: '01', title: 'Macro-Regime Driven Allocation', body: 'We begin every allocation decision by determining the prevailing macro regime. In bear markets, we concentrate in BTC and Gold — the highest-quality, most liquid assets — and hold significant cash. We do not chase altcoin performance when macro conditions are unfavourable. When quantitative easing restarts and interest rates fall below the neutral rate, we rotate toward higher-beta altcoin exposure. The regime determines the portfolio, not the other way round.' },
@@ -51,25 +51,13 @@ export default function FundPage() {
         </div>
       </div>
 
-      {/* Key stats */}
+      {/* Live key stats */}
       <section className="border-b border-border bg-surface">
-        <div className="wrap">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border">
-            {[
-              { label: 'Total Portfolio', value: '$13,000', sub: 'AUM' },
-              { label: 'Total Return',    value: '−7.74%',  sub: 'incl. 50% cash', neg: true },
-              { label: 'Invested Return', value: '−15.54%', sub: 'deployed capital', neg: true },
-              { label: 'Benchmark BGCI', value: '−43.00%', sub: 'since inception',   neg: true },
-            ].map(s => (
-              <div key={s.label} className="bg-surface p-6">
-                <p className="label-caps mb-2">{s.label}</p>
-                <p className={`font-sans font-semibold text-2xl mb-0.5 ${s.neg ? 'text-red-500' : 'text-ink'}`}>{s.value}</p>
-                <p className="text-[10px] text-ink-muted font-sans uppercase tracking-widest">{s.sub}</p>
-              </div>
-            ))}
-          </div>
-          <p className="py-3 px-1 text-xs font-sans text-ink-muted italic border-t border-border">
-            The 50% cash position acts as a structural buffer — total portfolio drawdown is roughly half that of the invested portion.
+        <div className="wrap py-8">
+          <LiveStatBand />
+          <p className="pt-4 px-1 text-xs font-sans text-ink-muted italic">
+            Live valuation: positions are fixed; prices update from CoinGecko every 60 seconds. The 50% cash position acts as a
+            structural buffer — total drawdown is roughly half that of the deployed portion.
           </p>
         </div>
       </section>
@@ -105,36 +93,38 @@ export default function FundPage() {
         </div>
       </section>
 
-      {/* Allocation horizontal banner */}
-      <section className="border-b border-border bg-surface">
-        <div className="wrap py-10">
+      {/* Live holdings table */}
+      <section className="border-b border-border bg-surface-subtle">
+        <div className="wrap section-py">
           <ScrollReveal>
-            <p className="label-gold mb-1">Current Allocation</p>
-            <p className="font-sans font-semibold text-lg text-ink mb-6 tracking-tight">Portfolio composition — cash-heavy, awaiting deployment levels</p>
-            <div className="flex flex-col md:flex-row md:items-center gap-8">
-              {/* Donut */}
-              <div className="w-48 flex-shrink-0">
-                <AllocationChart />
-              </div>
-              {/* Divider */}
-              <div className="hidden md:block w-px self-stretch bg-border" />
-              {/* Horizontal breakdown */}
-              <div className="flex-1 grid grid-cols-2 md:grid-cols-5 gap-px bg-border">
-                {allocationData.map(d => (
-                  <div key={d.name} className="bg-surface px-5 py-4">
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <span className="w-2 h-2 flex-shrink-0" style={{ backgroundColor: d.color }} />
-                      <p className="text-xs font-sans font-medium text-ink">{d.name}</p>
-                    </div>
-                    <p className="font-sans font-semibold text-xl text-ink">{d.value}%</p>
-                    <p className="text-[10px] font-sans text-ink-muted mt-0.5">
-                      ≈ ${Math.round(d.value / 100 * 13000).toLocaleString()}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <p className="label-gold mb-1">Live Holdings</p>
+            <p className="font-sans font-semibold text-lg text-ink mb-6 tracking-tight">Every position, priced in real time</p>
+            <LiveHoldings />
+            <p className="text-xs font-sans text-ink-muted mt-3 italic">
+              Units and average buy price are fixed; live price, value, P&amp;L, return and weight recompute as the market moves.
+            </p>
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* Live allocation + analytics */}
+      <section className="border-b border-border bg-surface">
+        <div className="wrap section-py">
+          <div className="grid md:grid-cols-2 gap-12">
+            <ScrollReveal>
+              <p className="label-gold mb-1">Live Allocation</p>
+              <p className="font-sans font-semibold text-base text-ink mb-5 tracking-tight">Portfolio composition — recomputed from live prices</p>
+              <LiveAllocation />
+            </ScrollReveal>
+            <ScrollReveal delay={0.08}>
+              <p className="label-gold mb-1">Position Returns</p>
+              <p className="font-sans font-semibold text-base text-ink mb-5 tracking-tight">Live gain / loss vs entry, by asset</p>
+              <LiveReturnBars />
+              <p className="label-gold mb-1 mt-8">Cost Basis vs Market Value</p>
+              <p className="font-sans font-semibold text-base text-ink mb-5 tracking-tight">What we paid vs what it&apos;s worth now</p>
+              <LiveCostVsValue />
+            </ScrollReveal>
+          </div>
         </div>
       </section>
 

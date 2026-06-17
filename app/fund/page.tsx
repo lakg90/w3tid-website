@@ -5,7 +5,7 @@ import PortfolioChart from '@/components/PortfolioChart';
 import IndexedChart from '@/components/IndexedChart';
 import EmailCapture from '@/components/EmailCapture';
 import BTCTicker from '@/components/BTCTicker';
-import { LiveStatBand, LiveHoldings, LiveAllocation, LiveReturnBars, LiveCostVsValue } from '@/components/LivePortfolio';
+import { LiveStatBand, LiveHoldings, LiveAllocation, LiveReturnBars, LiveCostVsValue, LiveIndexedStats } from '@/components/LivePortfolio';
 import { swingTrade } from '@/lib/data';
 
 const philosophy = [
@@ -79,14 +79,10 @@ export default function FundPage() {
             <ScrollReveal delay={0.08}>
               <p className="label-caps mb-1">Fund vs Bitcoin — Indexed to 100</p>
               <p className="font-sans font-semibold text-base text-ink mb-1 tracking-tight">Same capital. Very different drawdowns.</p>
-              <div className="flex gap-5 mb-5">
-                <div><p className="label-caps mb-1">Fund</p><p className="font-sans font-semibold text-sm text-red-500">92.26</p></div>
-                <div><p className="label-caps mb-1">BTC</p><p className="font-sans font-semibold text-sm text-ink-muted">57.49</p></div>
-                <div className="border-l border-border pl-5"><p className="label-caps mb-1">Alpha</p><p className="font-sans font-semibold text-sm text-gold">+34.8 pts</p></div>
-              </div>
+              <LiveIndexedStats />
               <IndexedChart height={280} />
               <p className="text-xs font-sans text-ink-muted mt-3 italic">
-                Both indexed to 100 at inception (Nov 2025). Jun reflects performance to 8 Jun 2026.
+                Both indexed to 100 at inception (Nov 2025). The &ldquo;Now&rdquo; point updates live with the market.
               </p>
             </ScrollReveal>
           </div>

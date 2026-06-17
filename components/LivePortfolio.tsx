@@ -64,6 +64,30 @@ export function LiveStatBand() {
   );
 }
 
+// ── Live Fund / BTC / Alpha (indexed to 100) ────────────────────────────────
+export function LiveIndexedStats() {
+  const d = usePortfolio();
+  const fund = d?.fund_index ?? null;
+  const btc = d?.btc_index ?? null;
+  const alpha = fund != null && btc != null ? fund - btc : null;
+  return (
+    <div className="flex gap-5 mb-5">
+      <div>
+        <p className="label-caps mb-1">Fund</p>
+        <p className={`font-sans font-semibold text-sm tabular-nums ${(fund ?? 100) >= 100 ? 'text-gold' : 'text-red-500'}`}>{fund != null ? fund.toFixed(2) : '—'}</p>
+      </div>
+      <div>
+        <p className="label-caps mb-1">BTC</p>
+        <p className="font-sans font-semibold text-sm tabular-nums text-ink-muted">{btc != null ? btc.toFixed(2) : '—'}</p>
+      </div>
+      <div className="border-l border-border pl-5">
+        <p className="label-caps mb-1">Alpha</p>
+        <p className="font-sans font-semibold text-sm tabular-nums text-gold">{alpha != null ? `${alpha >= 0 ? '+' : ''}${alpha.toFixed(1)} pts` : '—'}</p>
+      </div>
+    </div>
+  );
+}
+
 // ── Live holdings table ──────────────────────────────────────────────────────
 export function LiveHoldings() {
   const d = usePortfolio();

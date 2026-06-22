@@ -87,6 +87,14 @@ export const monthlyReturnsBar = [
 // ── Fund reports ──────────────────────────────────────────────────────────────
 export const fundReports = [
   {
+    id: 6,
+    title: 'Fund Report #6',
+    date: 'June 2026',
+    headline: 'Drawdown arrives — BTC breaks $60k. Short closed for profit, ~$1,800 deployed into weakness, gold added. Pivot from preservation to accumulation.',
+    pdf: '/reports/report-jun-2026.pdf',
+    stats: [{ label: 'Total Return', value: '−5.19%' }, { label: 'Cash', value: '44.7%' }, { label: 'Accumulation', value: '$57k · $54k' }],
+  },
+  {
     id: 5,
     title: 'Fund Report #5',
     date: 'May 2026',

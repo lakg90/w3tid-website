@@ -23,6 +23,7 @@ export const portfolioData = [
   { date: "15 May",     invested: 1.84,   total: 0.80  },
   { date: "26 May",     invested: -1.71,  total: -3.96 },
   { date: "8 Jun",      invested: -15.54, total: -7.74 },
+  { date: "22 Jun",     invested: -9.01,  total: -5.19 },
 ];
 
 // ── Indexed-to-100: Fund vs BTC ───────────────────────────────────────────────
@@ -35,7 +36,7 @@ export const indexedData = [
   { period: 'Mar',  fund: 95.80,  btc: 62.27  },
   { period: 'Apr',  fund: 98.95,  btc: 69.62  },
   { period: 'May',  fund: 101.53, btc: 67.17  },
-  { period: 'Jun*', fund: 92.26,  btc: 57.49  },
+  { period: 'Jun*', fund: 94.81,  btc: 60.67  },
 ];
 
 // ── Swing trade ───────────────────────────────────────────────────────────────
@@ -64,11 +65,11 @@ export const holdings = [
 ];
 
 export const allocationData = [
-  { name: 'Cash',  value: 50.4, color: '#C8C0B0' },
-  { name: 'BTC',   value: 34.9, color: '#D4A017' },
-  { name: 'PAXG',  value: 7.8,  color: '#A07810' },
-  { name: 'ETH',   value: 2.0,  color: '#8A847C' },
-  { name: 'XMR',   value: 0.7,  color: '#4A4540' },
+  { name: 'Cash',  value: 44.7, color: '#C8C0B0' },
+  { name: 'BTC',   value: 40.4, color: '#D4A017' },
+  { name: 'PAXG',  value: 12.0, color: '#A07810' },
+  { name: 'ETH',   value: 2.1,  color: '#8A847C' },
+  { name: 'XMR',   value: 0.75, color: '#4A4540' },
 ];
 
 // ── Monthly returns bar chart data ────────────────────────────────────────────
@@ -80,6 +81,7 @@ export const monthlyReturnsBar = [
   { period: 'Mar', fund: 0.9,   btc: 1.8   },
   { period: 'Apr', fund: 4.4,   btc: 11.8  },
   { period: 'May', fund: -0.5,  btc: -3.5  },
+  { period: 'Jun*', fund: -6.6, btc: -9.7  },
 ];
 
 // ── Fund reports ──────────────────────────────────────────────────────────────
